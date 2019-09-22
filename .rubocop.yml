@@ -1,0 +1,211 @@
+＃自動生成されるものはチェック対象から排除する
+AllCops：
+  除外：
+    - " vendor / ** / * "  ＃ rubocop config / default.yml
+    - " db / schema.rb "
+  DisplayCopNames：true
+
+＃1 ####################スタイル############################ ######
+
+＃ redirect_toのXXXとのイディオムを維持したい返します
+スタイル/ AndOr：
+  EnforcedStyle：条件付き
+
+＃日本語のコメントを許可する
+スタイル/ AsciiComments：
+  有効：false
+
+＃ ..行う終わりから更にメソッドチェーンすると見づらいので
+＃自動修正せず、自分で修正する
+＃の仕様内は見た目が綺麗になるので許可
+スタイル/ブロック区切り文字：
+  オートコレクト：false
+  除外：
+    - " spec / ** / * "
+
+＃オプション等、明示的にハッシュにした方が分かりやすい場合もある
+Style / BracesAroundHashParameters：
+  有効：false
+
+＃のスタイル/ CollectionMethods自体は無効になっているのだが、
+＃    https://github.com/bbatsov/rubocop/issues/1084
+＃    https://github.com/bbatsov/rubocop/issues/1334
+＃のパフォーマンス/検出がこの設定値を見るのでPreferredMethodsだけ変更しておく。
+＃
+＃デフォルト値から変えたのは
+＃    検索->検出
+＃      ActiveRecordののはと間違えやすいため見つけます
+＃    削減->注入
+＃      検出、拒否、選択と並べたときに韻を踏んでいるため。
+＃      collect-> mapを維持しているのは文字数が圧倒的に少ないため。
+スタイル/コレクションメソッド：
+  PreferredMethods：
+    検出：「検出」
+    検索：「検出」
+    注入する：「注入する」
+    削減：「注入」
+
+＃ Hash＃has_key？は許可したい
+Style / DeprecatedHashMethods：
+  有効：false
+
+＃ドキュメントの無いpublic classを許可する
+スタイル/ドキュメント：
+  有効：false
+
+＃ !! のイディオムは積極的に使う
+スタイル/ DoubleNegation：
+  有効：false
+
+＃メソッドチェーンの改行は末尾に。を入れる
+＃ REPLに貼り付けた際の暴発を防ぐため
+スタイル/ドット位置：
+  EnforcedStyle：末尾
+
+＃明示的にelseでnilを返すのは分かりやすいので許可する
+スタイル/ EmptyElse：
+  EnforcedStyle：空
+
+＃桁揃えが綺麗にならないことが多いのでmigrationは除外
+スタイル/エクストラスペース：
+  除外：
+    - " db / migrate / *。rb "
+
+＃いずれかに揃えるの場合 `sprintf`や` format`よりString＃％が好きです
+スタイル/フォーマット文字列：
+  EnforcedStyle：パーセント
+
+＃文の中に3行程度のブロックを書くぐらいは許容した方が現実的であれば
+スタイル/ GuardClause：
+  MinBodyLength：5
+
+＃1レーキタスクの順序のハッシュはロケットを許可する
+スタイル/ハッシュ構文：
+  除外：
+    - " ** / *。rake "
+    - 「 Rakefile 」
+
+＃条件式の方を意識させたい場合には後置のif / unlessを使わない方が分かりやすい
+スタイル/ IfUnlessModifier：
+  有効：false
+
+＃（{とhashを開始した場合に（の位置にインデントさせる
+＃そもそも{}が必要ない可能性が高いがStyle / BracesAroundHashParametersはチェックしないことにしたので
+スタイル/インデントハッシュ：
+  EnforcedStyle：一貫性のある
+
+＃プライベート/保護さは一段深くインデントする
+スタイル/インデントの一貫性：
+  EnforcedStyle：レール
+
+＃の範囲等は複数行でもラムダではなく- > {}で揃えた方が見た目が綺麗
+スタイル/ラムダ：
+  有効：false
+
+＃ 1_000_000と区切り文字が2個以上必要になる場合のみ_区切りを必須にする
+スタイル/数値リテラル：
+  MinDigits：7
+
+＃正規表現にマッチさせた時の特殊変数の置き換えはRegex.last_matchではなく
+＃名前付きキャプチャを使って参照したいのでauto-correctしない
+スタイル/ PerlBackrefs：
+  オートコレクト：false
+
+＃ has_から始まるメソッドは許可する
+スタイル/ PredicateName：
+  NamePrefixBlacklist：
+    - 「 is_ 」
+    - 「 have_ 」
+  NamePrefix：
+    - 「 is_ 」
+    - 「 have_ 」
+
+＃特にmodel内において、ローカル変数とメソッド呼び出しの区別をつけた方が分かりやすい場合が多い
+スタイル/冗長セルフ：
+  有効：false
+
+＃受付側で複数割り当てしろというのを明示
+スタイル/ RedundantReturn：
+  AllowMultipleReturnValues：true
+
+＃の仕様内は見た目が綺麗になるので許可
+スタイル/セミコロン：
+  除外：
+    - " spec / ** / * "
+
+＃失敗すると使い分ける必要ナシ
+Style / SignalException：
+  EnforcedStyle：only_raise
+
+＃ `||`もalignに使うことがあるので追加する
+スタイル/ SpaceAroundOperators：
+  MultiSpaceAllowedForOperators：
+    - " = "
+    - " => "
+    - " || "
+
+＃ *式展開したい場合に書き換えるのが面倒
+＃ *文章ではダブルクォートよりもシングルクォートの方が頻出する
+＃ことからEnforcedStyle：double_quotes推奨
+スタイル/文字列リテラル：
+  EnforcedStyle：double_quotes
+
+＃ auto-correct時にStyle / StringLiteralsとカニバって無限ループになる（v0.28.0）
+スタイル/文字列LiInteralsInInterpolation：
+  有効：false
+
+＃いくらなんでもinject {| a、e | }は短すぎるので分かりやすい名前をつけたい
+スタイル/ SingleLineBlockParams：
+  有効：false
+
+＃ *移行
+＃ * jbuilder
+＃ *モデルの関連付け
+＃ *コントローラーのコールバック
+＃辺りの桁揃えで引っかかるので全体的にチェックしない
+スタイル/ SingleSpaceBeforeFirstArg：
+  有効：false
+
+＃複数行の場合はケツカンマを入れる
+スタイル/トレイルコンマ：
+  EnforcedStyleForMultiline：コンマ
+
+＃ ####################リント############################ ######
+
+＃ *同名のメソッドがある場合にローカル変数に `_`を付ける
+＃ *一時変数として `_`を付ける
+＃というテクニックは頻出する
+Lint / UnderscorePrefixedVariableName：
+  有効：false
+
+＃子クラスで実装させるつもりのメソッドで引っかかるので
+Lint / UnusedMethodArgument：
+  有効：false
+
+＃ ####################メトリック############################ ######
+
+＃ 30まではギリギリ許せる範囲だった
+Metrics / AbcSize：
+  最大：30
+
+＃ 6は強すぎるので緩める
+メトリック/サイクロマティック複雑さ：
+  マックス：10
+
+＃ *警告120文字
+＃ *禁止160文字
+＃のイメージ
+メトリック/ライン長：
+  最大：160
+  除外：
+    - " db / migrate / *。rb "
+
+＃ 20行を超えるのはmigrationファイル以外滅多に無い
+Metrics / MethodLength：
+  マックス：20
+  除外：
+    - " db / migrate / *。rb "
+
+＃分岐の数。ガード句を多用しているとデフォルト7だと厳しい
+メトリック/知覚される複雑さ：
+  最大：8
